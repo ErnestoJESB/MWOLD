@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import CrearComentario from "./crearcomentario";
 
 
-const Comentario = ({ id, condominioUs }) => {
+const Comentario = ({ usuarioId, condominioId }) => {
     const params = useParams();
-    const { idIncidencia } = params;
+    const idIncidencia = params.idIncidencia;
+
+
+    console.log('este es el id del usuario actual ' + usuarioId);
+    console.log('este es el id del condominio ' + condominioId);
+    console.log('este es el id de la incidencia ' + idIncidencia);
+
     const [comentario, setComentario] = useState([]);
     const [incidencias, setIncidencias] = useState([]);
 
@@ -17,7 +24,7 @@ const Comentario = ({ id, condominioUs }) => {
     }, [idIncidencia]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/incidencias/${id}/${idIncidencia}`)
+        axios.get(`http://localhost:3000/incidencias/${usuarioId}/${idIncidencia}`)
             .then(res => {
                 setIncidencias(res.data);
                 for (let i = 0; i < res.data.length; i++) {
@@ -38,14 +45,37 @@ const Comentario = ({ id, condominioUs }) => {
             .catch(error => {
                 console.log(error);
             })
-    }, [id, idIncidencia]);
+    }, [usuarioId, idIncidencia]);
+
+    console.log(incidencias);
     return (
         <div>
-            <section className="order" id="order">
+            <section className="blogs" id="blogs">
                 <div className="heading">
-                    
+                    <span>Reporte</span>
+                    <h3>de incidencia</h3>
+                </div>
+
+                <div className="box-container">
+                    {incidencias.map((incidencia, index) => (
+                        <div className="box" key={index}>
+                            <div className="image">
+                                <h3> <i className="fas fa-calendar"></i> {incidencia.fecha} </h3>
+                                <img src={`http://localhost:3000/${incidencia.image}`} alt="" />
+                            </div>
+                            <div className="content">
+                                <div className="tags">
+                                    <a href="#"> <i className="fas fa-tag"></i> Tipo de incidencia / </a>
+                                    <a href="#"> <i className="fas fa-tag"></i> {incidencia.tipo}</a>
+                                </div>
+                                <h3>Descripción</h3>
+                                <p>{incidencia.descripcion}</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
+            <CrearComentario idUsuario={usuarioId} idCondominio={condominioId} incidenciaId={idIncidencia}/>
             <section>
                 <div className="order">
                     <div className="col-md-7">

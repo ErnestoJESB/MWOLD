@@ -11,6 +11,7 @@ router.post('/addCondominio', condominioController.save)
 router.get('/deleteCondominio/:id', condominioController.delete)
 router.get('/updateCondominio/:id', condominioController.edit)
 router.post('/updateCondominio/:id', condominioController.update)
+router.get('/getCondominioUsuarios/:id', condominioController.getUsuarios)
 /* router.get('/getCondominioInfo/:id', condominioController.getInfo)
  */
 module.exports = router;

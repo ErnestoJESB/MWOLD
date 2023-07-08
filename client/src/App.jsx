@@ -9,13 +9,15 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegistrarIncidencia from "./components/incidencias/registrarincidencia";
 import Comentario from "./components/incidencias/comentarios/comentario";
+import ListarIncidencia from "./components/incidencias/listarincidencia";
+import ListarComentario from "./components/incidencias/comentarios/listarcomentarios";
 
 
 function App({ auth, role, id, condominioUser }) {
   const autenticacion = auth;
   const rol = role;
   const idUsuario = id;
-  const condominio = condominioUser;
+  const idCondominio = condominioUser;
   return (
     <BrowserRouter>
       <Header auth={autenticacion} role={rol} />
@@ -30,16 +32,23 @@ function App({ auth, role, id, condominioUser }) {
         <Route path="/home" element={<Home />} />
         {
           auth ?
-            <Route path="/crearincidencia" element={<RegistrarIncidencia id={idUsuario} condominioUs={condominio} />} />
+            <Route path="/crearincidencia" element={<RegistrarIncidencia id={idUsuario} condominioUs={idCondominio} />} />
             :
             <Route path="/crearincidencia" element={<Login />} />
         }
 
         {
           auth ?
-          <Route path="/comentarios/:idIncidencia" element={<Comentario id={idUsuario} condominioUs={condominio} />} />
-          :
-          <Route path="/comentarios/:idIncidencia" element={<Login />} />
+            <Route path="/comentarios/:idIncidencia/:idCondomino" element={<ListarComentario usuarioId={idUsuario} condominioId={idCondominio} rolUser={rol}/>} />
+            :
+            <Route path="/comentarios/:idIncidencia/:idCondomino" element={<Login />} />
+        }
+
+        {
+          auth ?
+            <Route path="/incidencias/:idUsuario" element={<ListarIncidencia id={idUsuario} condominioUs={idCondominio} />} />
+            :
+            <Route path="/incidencias/:idUsuario" element={<Login />} />
         }
 
 

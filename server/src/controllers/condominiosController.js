@@ -260,6 +260,18 @@ controller.update = (req, res) => {
   });
 };
 
+controller.getUsuarios = (req, res) => {
+  const { id } = req.params;
+  req.getConnection((err, conn) => {
+    conn.query('SELECT id, name, lastname, telefono, email FROM usuario WHERE idcondominio = ? AND tipo_usuario = "usuario"', [id], (err, usuarios) => {
+      if (err) {
+        res.json(err);
+      }
+      return res.json(usuarios);
+    })
+  })
+};
+  
 
 module.exports = controller;
 

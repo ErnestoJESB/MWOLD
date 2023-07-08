@@ -9,9 +9,10 @@ const controller = {};
 
 
 controller.register = (req, res) => {
-  const sql = 'INSERT INTO usuario (email, password, name, lastname, address, telefono, idcondominio) VALUES (?)';
+  const sql = 'INSERT INTO usuario (email, password, name, lastname, address, telefono, idcondominio, tipo_usuario) VALUES (?)';
   bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
     if (err) return res.json({ Error: "Error al encriptar contraseña" });
+    let tipo_usuario = "usuario";
     const values = [
       req.body.email,
       hash,
@@ -19,7 +20,8 @@ controller.register = (req, res) => {
       req.body.lastname,
       req.body.address,
       req.body.phone,
-      req.body.condominio
+      req.body.condominio,
+      tipo_usuario
     ];
     req.getConnection((err, conn) => {
       if (err) return res.status(500).send('Error del servidor');

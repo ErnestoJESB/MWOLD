@@ -463,6 +463,8 @@ section {
 .blogs .box-container .box {
     border-radius: 3rem;
     overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .blogs .box-container .box:hover .image h3 {
@@ -476,7 +478,7 @@ section {
 
 .blogs .box-container .box .image {
     position: relative;
-    height: 25rem;
+    height: 50rem;
     overflow: hidden;
     width: 100%;
 }
@@ -507,7 +509,7 @@ section {
 
 .blogs .box-container .box .content {
     padding: 2rem 1.5rem;
-    background: #f7f6f9;
+    background: var(--card);
 }
 
 .blogs .box-container .box .content .tags {
@@ -516,27 +518,27 @@ section {
 
 .blogs .box-container .box .content .tags a {
     font-size: 1.5rem;
-    color: #494262;
+    color: #ffffff;
     padding-right: .5rem;
 }
 
 .blogs .box-container .box .content .tags a:hover {
-    color: #52389b;
+    color: var(--color1);
 }
 
 .blogs .box-container .box .content .tags a i {
-    color: #494262;
+    color: var(--color3);
     padding-right: .5rem;
 }
 
 .blogs .box-container .box .content h3 {
     font-size: 2rem;
-    color: #130f40;
+    color: var(--color1);
 }
 
 .blogs .box-container .box .content p {
     font-size: 1.4rem;
-    color: #635985;
+    color: #ffffff;
     padding: 1rem 0;
     line-height: 2;
 }
@@ -863,6 +865,7 @@ table {
     justify-content: center;
 }
 
+
 .table>:not(caption)>*>* {
     padding: 0.5rem 0.5rem;
     background-color: var(--card);
@@ -879,7 +882,12 @@ tr {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.table .btn{
+    margin-top: 0;
 }
 
 /* End table*/

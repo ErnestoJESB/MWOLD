@@ -123,6 +123,23 @@ controller.comentarios = (req, res) => {
   });
 };
 
+controller.createComentario = (req, res) => {
+  const data = req.body;
+  req.getConnection((err, conn) => {
+    if (err) {
+      console.error('Server error:', err);
+      return res.status(500).send('Server error');
+    }
+    conn.query('INSERT INTO comentarios SET ?', data, (err, rows) => {
+      if (err) {
+        console.error('Error inserting image:', err);
+        return res.status(500).send('Error inserting image');
+      }
+      console.log('Comment inserted successfully');
+    });
+  });
+};
+
 
 
 

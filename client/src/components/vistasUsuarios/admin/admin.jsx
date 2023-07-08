@@ -1,31 +1,58 @@
-import React from "react";
-import Graficas from "../graficas/graficas";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 
-const Admin = ({userName}) => {
-    const data = {
-        labels: ["Midtown", "Grand Arrecife", "Torre Península"],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [12, 19, 3],
-                backgroundColor: ["red", "blue", "yellow"],
-                borderColor: ["red", "blue", "yellow"],
-                borderWidth: 1,
-            },
-        ],
-    };
-    const options = {
-        plugins: {
-            legend: {
-                position: "right",
-            },
-        },
-    };
+
+const Admin = ({userName, userId, idCondominio}) => {
+    const [condominio, setCondominio] = useState([]);
+    const [condominioName, setCondominioName] = useState('');
+    const [condominos, setCondominos] = useState([]);
+
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/getCondominioUsuarios/${idCondominio}`)
+            .then(res => {
+                setCondominos(res.data);
+            })
+    }, [idCondominio]);
+
+
     return (
         <div>
             <h3>Admin</h3>
             <h3>Bienvenido {userName}</h3>
-            <Graficas data={data} options={options}/>
+            <h3>{condominioName}</h3>
+            <section>
+                <div className="order">
+                    <div className="col-md-7">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>n°</th>
+                                    <th>Codómino</th>
+                                    <th>Apellido</th>
+                                    <th>Número Telefónico</th>
+                                    <th>Correo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    condominos.map((condominos, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{condominos.name}</td>
+                                            <td>{condominos.lastname}</td>
+                                            <td>{condominos.telefono}</td>
+                                            <td>{condominos.email}</td>
+                                            <td><a href={`http://localhost:5173/incidencias/${condominos.id}`} className="btn">Incidencias</a></td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section >
         </div>
     );
 }

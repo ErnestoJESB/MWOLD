@@ -11,6 +11,7 @@ const Home = () => {
     const [role, setRole] = useState('');
     const [name, setName] = useState('');
     const [id, setId] = useState('');
+    const [condominio, setCondominio] = useState([]);
 
 
     axios.defaults.withCredentials = true;
@@ -22,6 +23,7 @@ const Home = () => {
                     setRole(res.data.tipo_usuario);
                     setName(res.data.userName);
                     setId(res.data.userId);
+                    setCondominio(res.data.idcondominio);
                 } else {
                     setAuth(false);
                     setMessage("No estas logeado");
@@ -40,7 +42,7 @@ const Home = () => {
                 auth ?
                     <div>
                         {role === "super-admin" && <SuperAdmin userName={name} userId={id} />}
-                        {role === "admin" && <Admin userName={name} userId={id} />}
+                        {role === "admin" && <Admin userName={name} userId={id} idCondominio={condominio} />}
                         {role === "usuario" && <Condomino userName={name} userId={id} />}
                     </div>
                     :
